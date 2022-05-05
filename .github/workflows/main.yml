@@ -11,7 +11,7 @@ jobs:
           
           npm install -g aws-cdk
           pip install -r requirements.txt
-          cdk snyth
+          cdk synth
       - name: Run Snyk test to check for IAC vulnerabilities
         uses: snyk/actions/iac@master
 #         continue-on-error: true # To make sure that SARIF upload gets called
