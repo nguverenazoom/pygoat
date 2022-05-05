@@ -8,6 +8,8 @@ jobs:
       - name: switch to directory
         run: |
           cd ecs/cluster
+          npm install -g aws-cdk
+          npm install
           pip install -r requirements.txt
           cdk snyth
       - name: Run Snyk test to check for IAC vulnerabilities
