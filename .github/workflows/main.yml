@@ -5,16 +5,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/python@master
-        continue-on-error: true # To make sure that SARIF upload gets called
+      - name: switch to directory
+        run: |
+          cd ecs/cluster
+          pip install -r requirements.txt
+          cdk snyth
+      - name: Run Snyk test to check for IAC vulnerabilities
+        uses: snyk/actions/iac@master
+#         continue-on-error: true # To make sure that SARIF upload gets called
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           args: --sarif-file-output=snyk.sarif
-      - name: Upload result to Github Code Scanning
-        uses: github/codeql-action/upload-sarif@v1
-        with:
+#       - name: Upload result to Github Code Scanning
+#         uses: github/codeql-action/upload-sarif@v1
+#         with:
           sarif_file: snyk.sarif
 
 
